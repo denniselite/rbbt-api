@@ -4,6 +4,10 @@ import (
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/context"
 	"github.com/kataras/iris/middleware/logger"
+	"flag"
+	"io/ioutil"
+	"gopkg.in/yaml.v2"
+	"fmt"
 )
 
 func main() {
@@ -36,7 +40,31 @@ func main() {
 		ctx.Text("pong")
 	})
 
-	app.Run(iris.Addr(":3000"), iris.WithConfiguration(iris.Configuration{ // default configuration:
+	config := loadConfig()
+	app.Run(iris.Addr(fmt.Sprintf(":%d", config.Listen)), iris.WithConfiguration(iris.Configuration{ // default configuration:
 		DisableBanner: true,
 	}))
+}
+
+func loadConfig() config {
+	var filename string
+
+	// register flags
+	flag.StringVar(&filename, "config", "", "config filename")
+	flag.StringVar(&filename, "c", "", "config filename (shorthand)")
+
+	flag.Parse()
+
+	config := config{}
+
+	configData, err := ioutil.ReadFile(filename)
+	if err != nil {
+		panic(err)
+	}
+	err = yaml.Unmarshal(configData, &config)
+	if err != nil {
+		panic(err)
+	}
+
+	return config
 }
