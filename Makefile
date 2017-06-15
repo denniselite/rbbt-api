@@ -25,6 +25,7 @@ LIBS_PKGS 		:=
 DEPS_PKGS 		:=	gopkg.in/yaml.v2 \
                     github.com/kataras/iris \
 	                github.com/kataras/iris/context \
+                    github.com/kataras/iris/middleware/logger \
                     github.com/satori/go.uuid \
                     gopkg.in/validator.v2 \
                     github.com/smartystreets/goconvey \
