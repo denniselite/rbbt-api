@@ -1,16 +1,19 @@
 package main
 
 import (
+	"flag"
+	"fmt"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/context"
 	"github.com/kataras/iris/middleware/logger"
-	"flag"
-	"io/ioutil"
 	"gopkg.in/yaml.v2"
-	"fmt"
+	"io/ioutil"
 )
 
+var storage Storage
+
 func main() {
+
 	app := iris.New()
 
 	commonLogger := logger.New(logger.Config{
@@ -38,6 +41,18 @@ func main() {
 	app.Handle("GET", "/ping", func(ctx context.Context) {
 		ctx.StatusCode(iris.StatusOK)
 		ctx.Text("pong")
+	})
+
+	app.Handle("GET", "/topics", func(ctx context.Context) {
+		getTopicsHandler(ctx)
+	})
+
+	app.Handle("POST", "/topics", func(ctx context.Context) {
+		addTopicHandler(ctx)
+	})
+
+	app.Handle("PUT", "/topics", func(ctx context.Context) {
+		updateTopicHandler(ctx)
 	})
 
 	config := loadConfig()

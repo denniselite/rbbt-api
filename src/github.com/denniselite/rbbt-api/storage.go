@@ -6,9 +6,9 @@ import (
 )
 
 type Topic struct {
-	Author  string `json:"author"`
-	Message string `json:"message"`
-	Rating  int    `json:"rating"`
+	Author string `json:"author"`
+	Body   string `json:"body"`
+	Rating int    `json:"rating"`
 }
 
 type Storage struct {
@@ -17,15 +17,17 @@ type Storage struct {
 
 func (s *Storage) Add(t Topic) (id int) {
 	s.data = append(s.data, t)
+	id = len(s.data) - 1
 	return
 }
 
 func (s *Storage) Update(id int, t Topic) (err error) {
 	if id < 0 || id >= len(s.data) {
-		return errors.New(fmt.Sprintf("Topic with ID %d is not exists", id))
+		err = errors.New(fmt.Sprintf("Topic with ID %d is not exists", id))
+		return
 	}
 	s.data[id] = t
-	return nil
+	return
 }
 
 func (s *Storage) GetItems() []Topic {
@@ -34,7 +36,9 @@ func (s *Storage) GetItems() []Topic {
 
 func (s *Storage) GetTopicById(id int) (t Topic, err error) {
 	if id < 0 || id >= len(s.data) {
-		return t, errors.New(fmt.Sprintf("Topic with ID %d is not exists", id))
+		err = errors.New(fmt.Sprintf("Topic with ID %d is not exists", id))
+		return
 	}
-	return s.data[id], nil
+	t = s.data[id]
+	return
 }

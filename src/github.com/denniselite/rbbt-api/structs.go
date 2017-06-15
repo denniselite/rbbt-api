@@ -6,5 +6,5 @@ type errorMessage struct {
 }
 
 type config struct {
-	Listen            int          `yaml:"listen"`
+	Listen int `yaml:"listen"`
 }
