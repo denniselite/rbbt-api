@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/kataras/iris/core/errors"
+	"github.com/denniselite/iris-fixed/core/errors"
 )
 
 type Topic struct {
@@ -31,6 +31,11 @@ func (s *Storage) Update(id int, t Topic) (err error) {
 }
 
 func (s *Storage) GetItems() []Topic {
+
+	// For an empty array in a response instead of null
+	if len(s.data) == 0 {
+		s.data = make([]Topic, 0)
+	}
 	return s.data
 }
 

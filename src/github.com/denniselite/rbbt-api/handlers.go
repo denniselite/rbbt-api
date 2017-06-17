@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/context"
+	"github.com/denniselite/iris-fixed"
+	"github.com/denniselite/iris-fixed/context"
 )
 
 type addTopicResponse struct {
@@ -10,7 +10,6 @@ type addTopicResponse struct {
 }
 
 type updateTopicRequest struct {
-	Id            int  `json:"id"`
 	VoteDirection bool `json:"voteDirection"`
 }
 
@@ -36,13 +35,19 @@ func addTopicHandler(ctx context.Context) {
 
 func updateTopicHandler(ctx context.Context) {
 	var req updateTopicRequest
-	err := ctx.ReadJSON(&req)
+	topicId, err := ctx.Params().GetInt("topicId")
+	if err != nil {
+		msg := errorMessage{iris.StatusBadRequest, "Invalid topic ID"}
+		ctx.JSON(msg)
+		return
+	}
+	err = ctx.ReadJSON(&req)
 	if err != nil {
 		msg := errorMessage{iris.StatusBadRequest, "Invalid JSON"}
 		ctx.JSON(msg)
 		return
 	}
-	t, err := storage.GetTopicById(req.Id)
+	t, err := storage.GetTopicById(topicId)
 	if err != nil {
 		msg := errorMessage{iris.StatusBadRequest, err.Error()}
 		ctx.JSON(msg)
@@ -53,7 +58,7 @@ func updateTopicHandler(ctx context.Context) {
 	} else {
 		t.Rating--
 	}
-	err = storage.Update(req.Id, t)
+	err = storage.Update(topicId, t)
 	if err != nil {
 		msg := errorMessage{iris.StatusBadRequest, err.Error()}
 		ctx.JSON(msg)

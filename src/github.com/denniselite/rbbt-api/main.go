@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/context"
-	"github.com/kataras/iris/middleware/logger"
+	"github.com/denniselite/iris-fixed"
+	"github.com/denniselite/iris-fixed/context"
+	"github.com/denniselite/iris-fixed/middleware/logger"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 )
@@ -16,7 +16,7 @@ func main() {
 
 	app := iris.New()
 
-	commonLogger := logger.New(logger.Config{
+	appLogger := logger.New(logger.Config{
 		// Status displays status code
 		Status: true,
 		// IP displays request's remote address
@@ -27,7 +27,7 @@ func main() {
 		Path: true,
 	})
 
-	app.Use(commonLogger)
+	app.Use(appLogger)
 
 	// log http errors should be done manually
 	errorLogger := logger.New()
@@ -51,7 +51,7 @@ func main() {
 		addTopicHandler(ctx)
 	})
 
-	app.Handle("PUT", "/topics", func(ctx context.Context) {
+	app.Handle("PUT", "/topics/{topicId:int min(0)}", func(ctx context.Context) {
 		updateTopicHandler(ctx)
 	})
 

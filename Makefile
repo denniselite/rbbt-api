@@ -23,9 +23,9 @@ LIBS_PKGS 		:=
 
 # dependencies packages
 DEPS_PKGS 		:=	gopkg.in/yaml.v2 \
-                    github.com/kataras/iris \
-	                github.com/kataras/iris/context \
-                    github.com/kataras/iris/middleware/logger \
+                    github.com/denniselite/iris-fixed \
+	                github.com/denniselite/iris-fixed/context \
+                    github.com/denniselite/iris-fixed/middleware/logger \
                     github.com/satori/go.uuid \
                     gopkg.in/validator.v2 \
                     github.com/smartystreets/goconvey \
