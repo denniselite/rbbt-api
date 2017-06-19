@@ -11,12 +11,12 @@ GOINSTALL		=	$(GOCMD) install
 GOCONVEY        =   $(BINPATH)/goconvey
 
 GOCONVEY_PORT   =   8180
-GOCONVEY_TARGET =   src/github.com/denniselite/rbbt-service"
+GOCONVEY_TARGET =   src/github.com/denniselite/rddt-service"
 
 export GOPATH
 
 # buildable packages
-MAIN_PKGS 		:=	github.com/denniselite/rbbt-api
+MAIN_PKGS 		:=	github.com/denniselite/rddt-api
 
 # usable libraries
 LIBS_PKGS 		:=

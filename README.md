@@ -1,4 +1,4 @@
-RBBT TOPICS API Service
+RDDT TOPICS API Service
 ============
 
 Installation
@@ -24,7 +24,7 @@ Starting service
 ----------------
 
 ```sh
-bin/rbbt-service --c cfg/config.yml
+bin/rddt-service --c cfg/config.yml
 ```
 
 Testing
