@@ -15,12 +15,14 @@ type Storage struct {
 	data []Topic
 }
 
+// Add topics to storage
 func (s *Storage) Add(t Topic) (id int) {
 	s.data = append(s.data, t)
 	id = len(s.data) - 1
 	return
 }
 
+// Update topic's data in the storage
 func (s *Storage) Update(id int, t Topic) (err error) {
 	if id < 0 || id >= len(s.data) {
 		err = errors.New(fmt.Sprintf("Topic with ID %d is not exists", id))
@@ -30,6 +32,8 @@ func (s *Storage) Update(id int, t Topic) (err error) {
 	return
 }
 
+// Returns all items of storage; when it's empty -
+// returns empty slice of the Topic type
 func (s *Storage) GetItems() []Topic {
 
 	// For an empty array in a response instead of null
@@ -39,6 +43,7 @@ func (s *Storage) GetItems() []Topic {
 	return s.data
 }
 
+// Return topic by ID
 func (s *Storage) GetTopicById(id int) (t Topic, err error) {
 	if id < 0 || id >= len(s.data) {
 		err = errors.New(fmt.Sprintf("Topic with ID %d is not exists", id))

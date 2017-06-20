@@ -11,7 +11,7 @@ GOINSTALL		=	$(GOCMD) install
 GOCONVEY        =   $(BINPATH)/goconvey
 
 GOCONVEY_PORT   =   8180
-GOCONVEY_TARGET =   src/github.com/denniselite/rddt-service"
+GOCONVEY_TARGET =   "src/github.com/denniselite/rddt-api"
 
 export GOPATH
 
@@ -26,8 +26,6 @@ DEPS_PKGS 		:=	gopkg.in/yaml.v2 \
                     github.com/denniselite/iris-fixed \
 	                github.com/denniselite/iris-fixed/context \
                     github.com/denniselite/iris-fixed/middleware/logger \
-                    github.com/satori/go.uuid \
-                    gopkg.in/validator.v2 \
                     github.com/smartystreets/goconvey \
 
 # packages for testing
